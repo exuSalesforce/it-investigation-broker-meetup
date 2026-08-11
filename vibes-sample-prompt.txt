@@ -1,0 +1,9 @@
+Build an Agent Broker V2 project called "IT Help Investigation Agent Network". The single AgentScript broker, it_help_investigation ("IT Help Desk Broker"), triages incoming IT support tickets over A2A. Flow: a generator classifies ticket severity (high/low) and extracts a Jira ticket ID (defaulting to "JIRA001"); a router sends high severity straight to an escalation executor (calls the escalate MCP tool) then echoes a completion message; low severity goes to an orchestrator ("Cross-Platform Triage") that searches the Help Center agent, checks the License Procurement agent if it's a licensing issue, and updates Jira via the updateIssue MCP tool, producing a resolution of help_given, license_given, or unresolved. A second router branches on resolution: license_given -> license summary generator, unresolved -> escalate-to-human executor, otherwise -> help summary generator - each ending in an echo status_update_event.
+
+Wire it with these exact assets and A2D connection URLs:
+
+- Help Center Agent (A2A) - searches the IT knowledge base - https://www.a2d-ai.com/api/platform/a626be9a-c2e8-4c66-b927-08b364d7814d/a2a
+- License Procurement Agent (A2A) - checks/provisions software licenses - https://www.a2d-ai.com/api/platform/de8ab8b5-a2c7-470b-91ba-99ccf191734c/a2a
+- Escalation MCP (streamableHttp, path /mcp) - https://www.a2d-ai.com/api/platform/7d7ed142-32b5-4589-a285-0da266b85e25/
+- Jira MCP (streamableHttp, path /mcp) - https://www.a2d-ai.com/api/platform/b57202bb-baa0-4b96-aa82-eeb178303da8/
+- GPT-5.4 Mini (LLM, OpenAI, model gpt-5-mini, default) - https://azure-openai-proxy.demos.mulesoft.com/openai/v1 with apiKey auth using ${openai.apiKey}

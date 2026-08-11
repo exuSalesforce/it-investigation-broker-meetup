@@ -101,11 +101,11 @@ registry:
         label: GPT-5.4 Mini
       metadata:
         platform: OpenAI
-    bedrock_openai:
-      info:
-        label: Bedrock OpenAI
-      metadata:
-        platform: OpenAI
+    # bedrock_openai:
+    #   info:
+    #     label: Bedrock OpenAI
+    #   metadata:
+    #     platform: OpenAI
 context:
   connections:
     help_center_agent_connection:
