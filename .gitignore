@@ -1,0 +1,6 @@
+# Hidden tooling / OS files — excluded from this repo
+.DS_Store
+.cursor/
+.mvn/
+.remember/
+.vscode/
